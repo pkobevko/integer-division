@@ -1,16 +1,15 @@
 package ua.foxminded.integerdivision;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class IntegerDivision {
 
-    public DivisionResult divide(int dividend, int divisor) {
+    public DivisionData divide(int dividend, int divisor) {
         validate(dividend, divisor);
 
-        List<Integer> resultDigits = calculate(dividend, divisor);
-        return new DivisionResult(dividend, divisor, resultDigits);
+        List<Integer> digitsList = calculate(dividend, divisor);
+        return new DivisionData(dividend, divisor, digitsList);
     }
 
     public List<Integer> calculate(int dividend, int divisor) {
@@ -27,9 +26,9 @@ public class IntegerDivision {
         String otherDigits = dividendString.substring(String.valueOf(firstNumber).length());
 
         // define list for result digits
-        ArrayList<Integer> result = new ArrayList<>();
-        result.add(firstNumber);
-        result.add(secondNumber);
+        ArrayList<Integer> digitsList = new ArrayList<>();
+        digitsList.add(firstNumber);
+        digitsList.add(secondNumber);
 
         int difference = firstNumber - secondNumber;
 
@@ -38,11 +37,11 @@ public class IntegerDivision {
             int decreasing = difference * 10 + Integer.parseInt(String.valueOf(otherDigits.charAt(i)));
             int denominator = divisor * (decreasing / divisor);
             difference = decreasing - denominator;
-            result.add(decreasing);
-            result.add(denominator);
+            digitsList.add(decreasing);
+            digitsList.add(denominator);
         }
 
-        return result;
+        return digitsList;
     }
 
     public void validate(int dividend, int divisor) {

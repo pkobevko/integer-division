@@ -6,29 +6,73 @@ public class DivisionFormatter {
 
     private static final String LINE_SEPARATOR = "\n";
 
-    public String format(DivisionResult result) {
+    public String format(DivisionData divisionData) {
 
-        String firstThreeLines = createFirstThreeLines(result);
+        List<Integer> digitsList = divisionData.getDigitsList();
 
-        String otherLines = "";
+        StringBuilder otherLines = new StringBuilder("");
 
+        int pointer = 1 + numOfDigits(digitsList.get(0));
 
-        return firstThreeLines + otherLines;
+        // iteration for each pair of numbers
+        for (int i = 2; i < digitsList.size(); i += 2) {
+            int firstNumber = digitsList.get(i);
+            int secondNumber = digitsList.get(i + 1);
+
+            if (secondNumber == 0) {
+                pointer++;
+                continue;
+            }
+
+            if (digitsList.get(i - 2) - digitsList.get(i - 1) == 0) {
+                pointer++;
+            }
+
+            int numberOfSpaces = pointer - numOfDigits(digitsList.get(i - 2) - digitsList.get(i - 1)) - 1;
+
+            String firstLine = spaces(numberOfSpaces) + "_" + firstNumber + LINE_SEPARATOR;
+            pointer = firstLine.length() - 1;
+            String secondLine = spaces(pointer - numOfDigits(secondNumber)) + secondNumber + LINE_SEPARATOR;
+            String thirdLine = spaces(pointer - numOfDigits(firstNumber)) + hyphens(numOfDigits(firstNumber)) + LINE_SEPARATOR;
+
+            otherLines.append(firstLine);
+            otherLines.append(secondLine);
+            otherLines.append(thirdLine);
+
+        }
+
+        String lastLine = spaces(pointer - numOfDigits(divisionData.getRemainder())) + divisionData.getRemainder() + LINE_SEPARATOR;
+
+        return createFirstThreeLines(divisionData) + otherLines + lastLine;
     }
 
     public int numOfDigits(int num) {
-        return String.valueOf(num).length();
+        if (num == 0) {
+            return 1;
+        }
+
+        return (int) (Math.log10(Math.abs(num)) + 1);
     }
 
-    public String createFirstThreeLines(DivisionResult result) {
+    public String createFirstThreeLines(DivisionData divisionData) {
 
-        List<Integer> resultDigits = result.getResultDigits();
-        int firstDigit = resultDigits.get(0);
-        int secondDigit = resultDigits.get(0);
+        int firstDigit = divisionData.getDigitsList().get(0);
+        int secondDigit = divisionData.getDigitsList().get(1);
 
-        String firstThreeLines = "_" + result.getDividend() + "|" + result.getDivisor() + LINE_SEPARATOR
-            + " ".repeat(numOfDigits(firstDigit) - numOfDigits(secondDigit) + 1) + resultDigits.get(1) + " ".repeat(numOfDigits(result.getDividend()) - numOfDigits(firstDigit)) + "|" + "-".repeat(numOfDigits(result.getQuotient())) + LINE_SEPARATOR
-            + " " + "-".repeat(numOfDigits(firstDigit)) + " ".repeat(numOfDigits(result.getDividend()) - numOfDigits(firstDigit)) + "|" + (result.getQuotient()) + LINE_SEPARATOR;
-        return firstThreeLines;
+        String line1 = "_" + divisionData.getDividend() + "|" + divisionData.getDivisor() + LINE_SEPARATOR;
+        String line2 = spaces(numOfDigits(firstDigit) - numOfDigits(secondDigit) + 1) + secondDigit + spaces(numOfDigits(divisionData.getDividend()) - numOfDigits(firstDigit)) + "|"
+            + hyphens(numOfDigits(divisionData.getQuotient())) + LINE_SEPARATOR;
+        String line3 = " " + hyphens(numOfDigits(firstDigit)) + spaces(numOfDigits(divisionData.getDividend()) - numOfDigits(firstDigit))
+            + "|" + (divisionData.getQuotient()) + LINE_SEPARATOR;
+
+        return line1 + line2 + line3;
+    }
+
+    public String spaces(int count) {
+        return " ".repeat(count);
+    }
+
+    public String hyphens(int count) {
+        return "-".repeat(count);
     }
 }
