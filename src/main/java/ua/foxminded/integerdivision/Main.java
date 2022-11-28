@@ -12,9 +12,9 @@ public class Main {
             System.out.println();
 
             IntegerDivision integerDivision = new IntegerDivision();
-            DivisionData result = integerDivision.divide(dividend, divisor);
+            DivisionData divisionData = integerDivision.divide(dividend, divisor);
             DivisionFormatter formatter = new DivisionFormatter();
-            System.out.println(formatter.format(result));
+            System.out.println(formatter.format(divisionData));
         }
     }
 }

@@ -49,12 +49,12 @@ public class IntegerDivision {
             throw new IllegalArgumentException("Divisor can't be zero");
         }
 
-        if (divisor > dividend) {
-            throw new IllegalArgumentException("Dividend must be bigger than divisor or equal");
-        }
-
         if (dividend < 1 || divisor < 1) {
             throw new IllegalArgumentException("Dividend and divisor must be equal to at least 1");
+        }
+
+        if (divisor > dividend) {
+            throw new IllegalArgumentException("Dividend must be bigger than divisor or equal");
         }
     }
 }

@@ -7,6 +7,7 @@ public class DivisionFormatter {
     private static final String LINE_SEPARATOR = "\n";
 
     public String format(DivisionData divisionData) {
+        validate(divisionData);
 
         List<Integer> digitsList = divisionData.getDigitsList();
 
@@ -38,10 +39,9 @@ public class DivisionFormatter {
             otherLines.append(firstLine);
             otherLines.append(secondLine);
             otherLines.append(thirdLine);
-
         }
 
-        String lastLine = spaces(pointer - numOfDigits(divisionData.getRemainder())) + divisionData.getRemainder() + LINE_SEPARATOR;
+        String lastLine = spaces(pointer - numOfDigits(divisionData.getRemainder())) + divisionData.getRemainder();
 
         return createFirstThreeLines(divisionData) + otherLines + lastLine;
     }
@@ -74,5 +74,11 @@ public class DivisionFormatter {
 
     public String hyphens(int count) {
         return "-".repeat(count);
+    }
+
+    public void validate(DivisionData divisionData) {
+        if (divisionData == null) {
+            throw new IllegalArgumentException("You cannot pass null to this function");
+        }
     }
 }
