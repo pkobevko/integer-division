@@ -13,9 +13,8 @@ public class DivisionFormatter {
 
         StringBuilder otherLines = new StringBuilder("");
 
-        int pointer = 1 + numOfDigits(digitsList.get(0));
+        int pointer = "_".length() + numOfDigits(digitsList.get(0));
 
-        // iteration for each pair of numbers
         for (int i = 2; i < digitsList.size(); i += 2) {
             int firstNumber = digitsList.get(i);
             int secondNumber = digitsList.get(i + 1);
@@ -29,10 +28,10 @@ public class DivisionFormatter {
                 pointer++;
             }
 
-            int numberOfSpaces = pointer - numOfDigits(digitsList.get(i - 2) - digitsList.get(i - 1)) - 1;
+            int numberOfSpaces = pointer - numOfDigits(digitsList.get(i - 2) - digitsList.get(i - 1)) - "_".length();
 
             String firstLine = spaces(numberOfSpaces) + "_" + firstNumber + LINE_SEPARATOR;
-            pointer = firstLine.length() - 1;
+            pointer = firstLine.length() - "_".length();
             String secondLine = spaces(pointer - numOfDigits(secondNumber)) + secondNumber + LINE_SEPARATOR;
             String thirdLine = spaces(pointer - numOfDigits(firstNumber)) + hyphens(numOfDigits(firstNumber)) + LINE_SEPARATOR;
 
@@ -51,7 +50,12 @@ public class DivisionFormatter {
             return 1;
         }
 
-        return (int) (Math.log10(Math.abs(num)) + 1);
+        int count = 0;
+        while (num != 0) {
+            num /= 10;
+            count++;
+        }
+        return count;
     }
 
     public String createFirstThreeLines(DivisionData divisionData) {
