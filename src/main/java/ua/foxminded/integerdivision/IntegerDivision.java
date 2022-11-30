@@ -12,7 +12,7 @@ public class IntegerDivision {
         return new DivisionData(dividend, divisor, digitsList);
     }
 
-    public List<Integer> calculate(int dividend, int divisor) {
+    private List<Integer> calculate(int dividend, int divisor) {
         String dividendString = String.valueOf(dividend);
 
         int firstNumber = Integer.parseInt(dividendString.substring(0, String.valueOf(divisor).length()));
@@ -40,7 +40,7 @@ public class IntegerDivision {
         return digitsList;
     }
 
-    public void validate(int dividend, int divisor) {
+    private void validate(int dividend, int divisor) {
         if (divisor == 0) {
             throw new IllegalArgumentException("Divisor can't be zero");
         }

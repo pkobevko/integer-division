@@ -21,22 +21,23 @@ class DivisionFormatterTest {
 
     @Test
     void format_shouldReturnCorrectlyFormattedString_whenExample1() {
-        String expected = "_78945|4\n" +
-            " 4    |-----\n" +
-            " -    |19736\n" +
-            "_38\n" +
-            " 36\n" +
-            " --\n" +
-            " _29\n" +
-            "  28\n" +
-            "  --\n" +
-            "  _14\n" +
-            "   12\n" +
-            "   --\n" +
-            "   _25\n" +
-            "    24\n" +
-            "    --\n" +
-            "     1";
+        String expected = """
+            _78945|4
+             4    |-----
+             -    |19736
+            _38
+             36
+             --
+             _29
+              28
+              --
+              _14
+               12
+               --
+               _25
+                24
+                --
+                 1""";
 
         IntegerDivision integerDivision = new IntegerDivision();
         DivisionData divisionData = integerDivision.divide(78945, 4);
@@ -48,13 +49,14 @@ class DivisionFormatterTest {
 
     @Test
     void format_shouldReturnCorrectlyFormattedString_whenExample2() {
-        String expected = "_405000450|45\n" +
-            " 405      |-------\n" +
-            " ---      |9000010\n" +
-            "      _45\n" +
-            "       45\n" +
-            "       --\n" +
-            "         0";
+        String expected = """
+            _405000450|45
+             405      |-------
+             ---      |9000010
+                  _45
+                   45
+                   --
+                     0""";
 
         IntegerDivision integerDivision = new IntegerDivision();
         DivisionData divisionData = integerDivision.divide(405000450, 45);
@@ -66,10 +68,11 @@ class DivisionFormatterTest {
 
     @Test
     void format_shouldReturnCorrectlyFormattedString_whenExample3() {
-        String expected = "_12345|12345\n" +
-            " 12345|-\n" +
-            " -----|1\n" +
-            "     0";
+        String expected = """
+            _12345|12345
+             12345|-
+             -----|1
+                 0""";
 
         IntegerDivision integerDivision = new IntegerDivision();
         DivisionData divisionData = integerDivision.divide(12345, 12345);
